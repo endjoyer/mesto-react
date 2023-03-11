@@ -58,12 +58,46 @@ function App() {
           name="add"
           title="Новое место"
           isOpen={isAddPlacePopupOpen}
-        />
+        >
+          <label className="popup__label">
+            <input
+              className="popup__input"
+              type="text"
+              name="name"
+              placeholder="Название"
+              required
+              minLength="2"
+              maxLength="30"
+            />
+            <span className="name-error popup__input-error"></span>
+          </label>
+          <label className="popup__label">
+            <input
+              className="popup__input"
+              type="url"
+              name="link"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="link-error popup__input-error"></span>
+          </label>
+        </PopupWithForm>
         <PopupWithForm
           name="edit-avatar"
           title="Обновить аватар"
           isOpen={isEditAvatarPopupOpen}
-        />
+        >
+          <label className="popup__label">
+            <input
+              className="popup__input"
+              type="url"
+              name="avatar"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="avatar-error popup__input-error"></span>
+          </label>
+        </PopupWithForm>
         <PopupWithForm name="confirmation" title="Вы уверены?" />
         <PopupWithImage />
       </div>

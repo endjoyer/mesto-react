@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main(props) {
   return (
     <main className="page__content">
       <section className="profile">
@@ -10,7 +10,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
             className="profile__edit-avatar-button"
             aria-label="Открыть редактирование картинки профиля"
             type="button"
-            onClick={() => onEditAvatar(true)}
+            onClick={() => props.onEditAvatar(true)}
           ></button>
         </div>
         <div className="profile__info">
@@ -20,7 +20,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
               className="profile__edit-button"
               aria-label="Открыть редактирование профиля"
               type="button"
-              onClick={() => onEditProfile(true)}
+              onClick={() => props.onEditProfile(true)}
             ></button>
           </div>
           <p className="profile__subtitle"></p>
@@ -29,7 +29,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
           className="profile__add-button"
           aria-label="Открыть добавление изображений"
           type="button"
-          onClick={() => onAddPlace(true)}
+          onClick={() => props.onAddPlace(true)}
         ></button>
       </section>
       <section className="elements">

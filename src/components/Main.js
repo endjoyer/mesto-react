@@ -2,38 +2,35 @@ import React from 'react';
 import { api } from '../utils/Api.js';
 import Card from './Card.js';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onImageClick,
+}) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
+  const handleEditAvatarClick = () => onEditAvatar(true);
+  const handleEditProfileClick = () => onEditProfile(true);
+  const handleAddPlaceClick = () => onAddPlace(true);
+
+  const cardsElements = cards.map(({ _id, ...props }) => (
+    <li className="element" key={_id}>
+      <Card {...props} onImageClick={onImageClick} onCardClick={onCardClick} />
+    </li>
+  ));
+
   React.useEffect(() => {
-    api
-      .getInitialUser()
-      .then((userData) => {
+    Promise.all([api.getInitialUser(), api.getInitialCards()])
+      .then(([userData, cardData]) => {
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []);
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cardData) => {
-        setCards(
-          cardData.map((item) => {
-            return {
-              id: item._id,
-              likes: item.likes,
-              name: item.name,
-              link: item.link,
-            };
-          })
-        );
+        setCards(cardData);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -53,7 +50,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
             className="profile__edit-avatar-button"
             aria-label="Открыть редактирование картинки профиля"
             type="button"
-            onClick={() => onEditAvatar(true)}
+            onClick={handleEditAvatarClick}
           ></button>
         </div>
         <div className="profile__info">
@@ -63,7 +60,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
               className="profile__edit-button"
               aria-label="Открыть редактирование профиля"
               type="button"
-              onClick={() => onEditProfile(true)}
+              onClick={handleEditProfileClick}
             ></button>
           </div>
           <p className="profile__subtitle">{userDescription}</p>
@@ -72,15 +69,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
           className="profile__add-button"
           aria-label="Открыть добавление изображений"
           type="button"
-          onClick={() => onAddPlace(true)}
+          onClick={handleAddPlaceClick}
         ></button>
       </section>
       <section className="elements">
-        <ul className="elements__container">
-          {cards.map(({ id, ...props }) => (
-            <Card key={id} {...props} onCardClick={onCardClick} />
-          ))}
-        </ul>
+        <ul className="elements__container">{cardsElements}</ul>
       </section>
     </main>
   );

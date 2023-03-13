@@ -3,7 +3,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
+import ImagePopup from './ImagePopup.js';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
@@ -132,7 +132,7 @@ function App() {
           </label>
         </PopupWithForm>
         <PopupWithForm name="confirmation" title="Вы уверены?" />
-        <PopupWithImage card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </>
   );

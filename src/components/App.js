@@ -10,6 +10,14 @@ function App() {
     React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
+
+  function closeAllPopups() {
+    setEditProfilePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setSelectedCard({});
+  }
 
   return (
     <>
@@ -19,12 +27,14 @@ function App() {
           onEditAvatar={setEditAvatarPopupOpen}
           onEditProfile={setEditProfilePopupOpen}
           onAddPlace={setAddPlacePopupOpen}
+          onCardClick={setSelectedCard}
         />
         <Footer />
         <PopupWithForm
           name="edit"
           title="Редактировать профиль"
           isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
         >
           {' '}
           <label className="popup__label">
@@ -58,6 +68,7 @@ function App() {
           name="add"
           title="Новое место"
           isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
         >
           <label className="popup__label">
             <input
@@ -86,6 +97,7 @@ function App() {
           name="edit-avatar"
           title="Обновить аватар"
           isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
         >
           <label className="popup__label">
             <input
@@ -99,10 +111,10 @@ function App() {
           </label>
         </PopupWithForm>
         <PopupWithForm name="confirmation" title="Вы уверены?" />
-        <PopupWithImage />
+        <PopupWithImage card={selectedCard} onClose={closeAllPopups} />
       </div>
 
-      <template id="element-template">
+      {/* <template id="element-template">
         <li className="element">
           <div className="element__image-container">
             <img className="element__image" />
@@ -124,7 +136,7 @@ function App() {
             </div>
           </div>
         </li>
-      </template>
+      </template> */}
     </>
   );
 }

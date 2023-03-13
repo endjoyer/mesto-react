@@ -1,10 +1,8 @@
 import React from 'react';
 
-function ImagePopup({ card, onClose }) {
+function ImagePopup({ card, onClose, isOpen }) {
   return (
-    <aside //Не понятно как сделать так, чтобы картинка закрывалась плавно, как и попап, а не исчезала мгновенно
-      className={`popup popup-look-img ${card.link ? 'popup_opened' : ''}`}
-    >
+    <aside className={`popup popup-look-img ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container popup-look-img__container">
         <button
           className="popup__close"

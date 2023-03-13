@@ -78,13 +78,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       <section className="elements">
         <ul className="elements__container">
           {cards.map(({ id, ...props }) => (
-            <Card
-              key={id}
-              {...props}
-              onCardClick={onCardClick}
-              // onClose={props.closeAllPopups}
-              // isOpen={props.selectedCard}
-            />
+            <Card key={id} {...props} onCardClick={onCardClick} />
           ))}
         </ul>
       </section>

@@ -5,7 +5,7 @@ import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 
-function App(card) {
+function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
@@ -21,6 +21,11 @@ function App(card) {
     setIsImagePopupOpened(false);
   }
 
+  const handleOpenImagePopup = (card) => {
+    setSelectedCard(card);
+    setIsImagePopupOpened(true);
+  };
+
   React.useEffect(() => {
     function handleEscClose(evt) {
       if (evt.key === 'Escape') {
@@ -35,20 +40,18 @@ function App(card) {
     }
 
     if (
-      true ===
-      (isEditProfilePopupOpen ||
-        isEditAvatarPopupOpen ||
-        isAddPlacePopupOpen ||
-        isImagePopupOpened)
+      isEditProfilePopupOpen ||
+      isEditAvatarPopupOpen ||
+      isAddPlacePopupOpen ||
+      isImagePopupOpened
     ) {
       document.addEventListener('keydown', handleEscClose);
       document.addEventListener('mousedown', handleOverlayClose);
+      return () => {
+        document.removeEventListener('keydown', handleEscClose);
+        document.removeEventListener('mousedown', handleOverlayClose);
+      };
     }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-      document.removeEventListener('mousedown', handleOverlayClose);
-    };
   }, [
     isEditProfilePopupOpen,
     isEditAvatarPopupOpen,
@@ -64,7 +67,7 @@ function App(card) {
         onEditProfile={setIsEditProfilePopupOpen}
         onAddPlace={setIsAddPlacePopupOpen}
         onImageClick={setIsImagePopupOpened}
-        onCardClick={setSelectedCard}
+        onCardClick={handleOpenImagePopup}
       />
       <Footer />
       <PopupWithForm

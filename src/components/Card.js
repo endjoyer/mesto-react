@@ -3,7 +3,6 @@ import React from 'react';
 function Card(card) {
   function handleCardClick() {
     card.onCardClick(card);
-    card.onImageClick(true);
   }
 
   return (

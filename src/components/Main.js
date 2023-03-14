@@ -2,13 +2,7 @@ import React from 'react';
 import { api } from '../utils/Api.js';
 import Card from './Card.js';
 
-function Main({
-  onEditProfile,
-  onAddPlace,
-  onEditAvatar,
-  onCardClick,
-  onImageClick,
-}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -20,7 +14,7 @@ function Main({
 
   const cardsElements = cards.map(({ _id, ...props }) => (
     <li className="element" key={_id}>
-      <Card {...props} onImageClick={onImageClick} onCardClick={onCardClick} />
+      <Card {...props} onCardClick={onCardClick} />
     </li>
   ));
 

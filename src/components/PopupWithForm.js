@@ -9,7 +9,12 @@ function PopupWithForm(props) {
         }`}
         id="popup-edit"
       >
-        <form className="popup__container" name="form-popup" noValidate>
+        <form
+          className="popup__container"
+          name="form-popup"
+          onSubmit={props.onSubmit}
+          noValidate
+        >
           <h3 className="popup__title">{props.title}</h3>
           <button
             className="popup__close"
@@ -19,7 +24,13 @@ function PopupWithForm(props) {
           ></button>
           {props.children}
           <button className="popup__btn popup__submit" type="submit">
-            <span className="popup__btn-text">Сохранить</span>
+            <span
+              className={`popup__btn-text ${
+                props.isLoading ? 'popup__btn-text_loading' : ''
+              }`}
+            >
+              Сохранить
+            </span>
           </button>
         </form>
       </aside>

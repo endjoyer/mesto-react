@@ -1,5 +1,3 @@
-import React from 'react';
-
 function ImagePopup({ card, onClose, isOpen }) {
   return (
     <aside className={`popup popup-look-img ${isOpen ? 'popup_opened' : ''}`}>

@@ -1,4 +1,4 @@
-# Место ([mesto-react](https://endjoyer.github.io/mesto/))
+# Место ([mesto-react](https://endjoyer.github.io/mesto-react/))
 
 ![screenshot](./src/images/preview.jpg)
 
@@ -39,7 +39,7 @@ _- "Mesto" - это интерактивная страница, где поль
 - Клонировать репозиторий:
 
 ```console
-    git clone https://github.com/endjoyer/mesto.git
+    git clone https://github.com/endjoyer/mesto-react.git
 ```
 
 - Собрать проект Вебпаком:
@@ -56,10 +56,10 @@ _- "Mesto" - это интерактивная страница, где поль
 
 ### Ссылка на сайт:
 
-https://endjoyer.github.io/mesto/
+https://endjoyer.github.io/mesto-react/
 
 [Ссылка на макет в Figma](https://www.figma.com/file/3YKkZfiSS1K8s44YUQTLyJ/JavaScript.-Sprint-9?node-id=109%3A2&t=7tlU9OiVAkQQ1eAp-0)
 
 ### Планы
 
-Следующих спринтах обучения в проекте будет реализован собственный бэкенд.
+Следующих спринтах обучения в проекте будет реализован авторизация и др..

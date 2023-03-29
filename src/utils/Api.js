@@ -1,5 +1,3 @@
-import Card from '../components/Card';
-
 class Api {
   constructor(data) {
     this._baseUrl = data.serverUrl;
@@ -86,22 +84,6 @@ class Api {
       return this._requestResult(res);
     }
   }
-
-  // async putLike(cardId) {
-  //   const res = await fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-  //     method: 'PUT',
-  //     headers: this._headers,
-  //   });
-  //   return this._requestResult(res);
-  // }
-
-  // async removeLike(cardId) {
-  //   const res = await fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-  //     method: 'DELETE',
-  //     headers: this._headers,
-  //   });
-  //   return this._requestResult(res);
-  // }
 }
 
 export const api = new Api({

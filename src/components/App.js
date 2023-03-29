@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { api } from '../utils/Api.js';
-import { CurrentUserContext } from './contexts/CurrentUserContext.js';
-import { CardsContext } from './contexts/CardsContext.js';
+import { api } from '../utils/api.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -42,16 +41,28 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   function handleConfirmBeforeDelete() {
-    api.deleteCard(cardToDelete).then(() => {
-      setCards(cards.filter((item) => item._id !== cardToDelete));
-      closeAllPopups();
-    });
+    api
+      .deleteCard(cardToDelete)
+      .then(() => {
+        setCards(cards.filter((item) => item._id !== cardToDelete));
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   useEffect(() => {
@@ -64,39 +75,6 @@ function App() {
         console.log(`Ошибка: ${err}`);
       });
   }, []);
-
-  useEffect(() => {
-    function handleEscClose(evt) {
-      if (evt.key === 'Escape') {
-        closeAllPopups();
-      }
-    }
-
-    function handleOverlayClose(evt) {
-      if (evt.target.classList.contains('popup_opened')) {
-        closeAllPopups();
-      }
-    }
-
-    if (
-      isEditProfilePopupOpen ||
-      isEditAvatarPopupOpen ||
-      isAddPlacePopupOpen ||
-      isImagePopupOpened
-    ) {
-      document.addEventListener('keydown', handleEscClose);
-      document.addEventListener('mousedown', handleOverlayClose);
-      return () => {
-        document.removeEventListener('keydown', handleEscClose);
-        document.removeEventListener('mousedown', handleOverlayClose);
-      };
-    }
-  }, [
-    isEditProfilePopupOpen,
-    isEditAvatarPopupOpen,
-    isAddPlacePopupOpen,
-    isImagePopupOpened,
-  ]);
 
   function handleUpdateUser(data) {
     setIsLoading(true);
@@ -150,7 +128,6 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <CardsContext.Provider value={cards}>
         <div className="page">
           <Header />
           <Main
@@ -193,7 +170,6 @@ function App() {
             onClose={closeAllPopups}
           />
         </div>
-      </CardsContext.Provider>
     </CurrentUserContext.Provider>
   );
 }

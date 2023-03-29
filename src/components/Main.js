@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from './Card.js';
-import { CurrentUserContext } from './contexts/CurrentUserContext.js';
-import { CardsContext } from './contexts/CardsContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main({
   onEditProfile,
@@ -10,9 +9,9 @@ function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
+  cards,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const cards = React.useContext(CardsContext);
 
   const handleEditAvatarClick = () => onEditAvatar(true);
   const handleEditProfileClick = () => onEditProfile(true);

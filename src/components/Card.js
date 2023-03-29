@@ -1,20 +1,20 @@
 import React from 'react';
 import { CurrentUserContext } from './contexts/CurrentUserContext.js';
 
-function Card(card) {
+function Card({ card, onCardLike, onCardClick, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
   const isLiked = card.likes.some((user) => user._id === currentUser._id);
   const isOwn = card.owner._id === currentUser._id;
 
   function handleCardClick() {
-    card.onCardClick(card);
+    onCardClick(card);
   }
   function handleLikeClick() {
-    card.onCardLike(card);
+    onCardLike(card);
   }
 
-  function handleDeleteClick() {
-    card.onCardDelete(card);
+  function handleDeleteCardClick() {
+    onCardDelete(card._id);
   }
 
   return (
@@ -32,7 +32,7 @@ function Card(card) {
           className="element__delete"
           aria-label="Закрыть"
           type="button"
-          onClick={handleDeleteClick}
+          onClick={handleDeleteCardClick}
         />
       )}
       <div className="element__panel">

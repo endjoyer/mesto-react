@@ -1,5 +1,4 @@
 import React from 'react';
-import { api } from '../utils/Api.js';
 import Card from './Card.js';
 import { CurrentUserContext } from './contexts/CurrentUserContext.js';
 import { CardsContext } from './contexts/CardsContext.js';
@@ -15,38 +14,20 @@ function Main({
   const currentUser = React.useContext(CurrentUserContext);
   const cards = React.useContext(CardsContext);
 
-  // const [userName, setUserName] = React.useState('');
-  // const [userDescription, setUserDescription] = React.useState('');
-  // const [userAvatar, setUserAvatar] = React.useState('');
-  // const [cards, setCards] = React.useState([]);
-
   const handleEditAvatarClick = () => onEditAvatar(true);
   const handleEditProfileClick = () => onEditProfile(true);
   const handleAddPlaceClick = () => onAddPlace(true);
 
-  const cardsElements = cards.map(({ ...props }) => (
-    <li className="element" key={props._id}>
+  const cardsElements = cards.map((card) => (
+    <li className="element" key={card._id}>
       <Card
-        {...props}
+        card={card}
         onCardDelete={onCardDelete}
         onCardClick={onCardClick}
         onCardLike={onCardLike}
       />
     </li>
   ));
-
-  // React.useEffect(() => {
-  //   Promise.all([api.getInitialUser(), api.getInitialCards()])
-  //     .then(([userData, cardData]) => {
-  //       setUserName(userData.name);
-  //       setUserDescription(userData.about);
-  //       setUserAvatar(userData.avatar);
-  //       setCards(cardData);
-  //     })
-  //     .catch((err) => {
-  //       console.log(`Ошибка: ${err}`);
-  //     });
-  // }, []);
 
   return (
     <main className="page__content">

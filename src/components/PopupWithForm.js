@@ -1,35 +1,40 @@
-import React from 'react';
-
-function PopupWithForm(props) {
+function PopupWithForm({
+  name,
+  isOpen,
+  title,
+  onSubmit,
+  onClose,
+  children,
+  isLoading,
+  btnText,
+}) {
   return (
     <>
       <aside
-        className={`popup popup_type_${props.name} ${
-          props.isOpen ? 'popup_opened' : ''
-        }`}
+        className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}
         id="popup-edit"
       >
         <form
           className="popup__container"
           name="form-popup"
-          onSubmit={props.onSubmit}
+          onSubmit={onSubmit}
           noValidate
         >
-          <h3 className="popup__title">{props.title}</h3>
+          <h3 className="popup__title">{title}</h3>
           <button
             className="popup__close"
             aria-label="Закрыть"
             type="button"
-            onClick={props.onClose}
+            onClick={onClose}
           ></button>
-          {props.children}
+          {children}
           <button className="popup__btn popup__submit" type="submit">
             <span
               className={`popup__btn-text ${
-                props.isLoading ? 'popup__btn-text_loading' : ''
+                isLoading ? 'popup__btn-text_loading' : ''
               }`}
             >
-              Сохранить
+              {btnText}
             </span>
           </button>
         </form>

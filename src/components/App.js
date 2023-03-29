@@ -1,39 +1,43 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { api } from '../utils/Api.js';
+import { CurrentUserContext } from './contexts/CurrentUserContext.js';
+import { CardsContext } from './contexts/CardsContext.js';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
-import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import { api } from '../utils/Api.js';
-import { CurrentUserContext } from './contexts/CurrentUserContext.js';
-import { CardsContext } from './contexts/CardsContext.js';
+import ConfirmationPopup from './ConfirmationPopup.js';
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isImagePopupOpened, setIsImagePopupOpened] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState('');
-  const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false),
+    [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false),
+    [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false),
+    [isImagePopupOpened, setIsImagePopupOpened] = useState(false),
+    [isLoading, setIsLoading] = useState(false),
+    [cardToDelete, setCardToDelete] = useState(null),
+    [selectedCard, setSelectedCard] = useState({}),
+    [currentUser, setCurrentUser] = useState(''),
+    [cards, setCards] = useState([]);
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpened(false);
+    setCardToDelete(null);
   }
 
   const handleOpenImagePopup = (card) => {
     setSelectedCard(card);
     setIsImagePopupOpened(true);
   };
+
+  function handleCardDelete(cardId) {
+    setCardToDelete(cardId);
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -43,13 +47,14 @@ function App() {
     });
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards(cards.filter((item) => item._id !== card._id));
+  function handleConfirmBeforeDelete() {
+    api.deleteCard(cardToDelete).then(() => {
+      setCards(cards.filter((item) => item._id !== cardToDelete));
+      closeAllPopups();
     });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getInitialUser(), api.getInitialCards()])
       .then(([userData, cardData]) => {
         setCurrentUser(userData);
@@ -60,7 +65,7 @@ function App() {
       });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleEscClose(evt) {
       if (evt.key === 'Escape') {
         closeAllPopups();
@@ -155,6 +160,7 @@ function App() {
             onImageClick={setIsImagePopupOpened}
             onCardClick={handleOpenImagePopup}
             onCardLike={handleCardLike}
+            cards={cards}
             onCardDelete={handleCardDelete}
           />
           <Footer />
@@ -176,7 +182,11 @@ function App() {
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
           />
-          <PopupWithForm name="confirmation" title="Вы уверены?" />
+          <ConfirmationPopup
+            isOpen={cardToDelete}
+            onClose={closeAllPopups}
+            onConfirm={handleConfirmBeforeDelete}
+          />
           <ImagePopup
             isOpen={isImagePopupOpened}
             card={selectedCard}

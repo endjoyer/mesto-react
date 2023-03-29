@@ -1,10 +1,8 @@
 import React from 'react';
+import Popup from './Popup';
 import PopupWithForm from './PopupWithForm';
-import { CardsContext } from './contexts/CardsContext';
 
 function EditProfilePopup({ isOpen, onClose, onAddPlace, isLoading }) {
-  const cards = React.useContext(CardsContext);
-
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
@@ -30,42 +28,44 @@ function EditProfilePopup({ isOpen, onClose, onAddPlace, isLoading }) {
   }
 
   return (
-    <PopupWithForm
-      name="add"
-      title="Новое место"
-      isLoading={isLoading}
-      isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={handleSubmit}
-      btnText="Сохранить"
-    >
-      <label className="popup__label">
-        <input
-          className="popup__input"
-          type="text"
-          name="name"
-          placeholder="Название"
-          required
-          minLength="2"
-          maxLength="30"
-          value={name}
-          onChange={handleChangeName}
-        />
-        <span className="name-error popup__input-error"></span>
-      </label>
-      <label className="popup__label">
-        <input
-          className="popup__input"
-          type="url"
-          name="link"
-          placeholder="Ссылка на картинку"
-          value={link}
-          onChange={handleChangeLink}
-          required
-        />
-        <span className="link-error popup__input-error"></span>
-      </label>
-    </PopupWithForm>
+    <Popup isOpen={isOpen} onClose={onClose}>
+      <PopupWithForm
+        name="add"
+        title="Новое место"
+        isLoading={isLoading}
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleSubmit}
+        btnText="Сохранить"
+      >
+        <label className="popup__label">
+          <input
+            className="popup__input"
+            type="text"
+            name="name"
+            placeholder="Название"
+            required
+            minLength="2"
+            maxLength="30"
+            value={name}
+            onChange={handleChangeName}
+          />
+          <span className="name-error popup__input-error"></span>
+        </label>
+        <label className="popup__label">
+          <input
+            className="popup__input"
+            type="url"
+            name="link"
+            placeholder="Ссылка на картинку"
+            value={link}
+            onChange={handleChangeLink}
+            required
+          />
+          <span className="link-error popup__input-error"></span>
+        </label>
+      </PopupWithForm>
+    </Popup>
   );
 }
 

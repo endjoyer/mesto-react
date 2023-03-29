@@ -1,3 +1,4 @@
+import Popup from './Popup';
 import PopupWithForm from './PopupWithForm';
 
 function ConfirmationPopup({ isOpen, onClose, onConfirm }) {
@@ -8,14 +9,16 @@ function ConfirmationPopup({ isOpen, onClose, onConfirm }) {
   }
 
   return (
-    <PopupWithForm
-      name="confirmation"
-      title="Вы уверены?"
-      btnText="Да"
-      isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={handleSubmit}
-    ></PopupWithForm>
+    <Popup isOpen={isOpen} onClose={onClose}>
+      <PopupWithForm
+        name="confirmation"
+        title="Вы уверены?"
+        btnText="Да"
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleSubmit}
+      ></PopupWithForm>
+    </Popup>
   );
 }
 

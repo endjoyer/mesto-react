@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function Popup({ isOpen, onClose, children }) {
+export default function Popup({ isOpen, onClose, children, name }) {
   useEffect(() => {
     function handleEscClose(evt) {
       if (evt.key === 'Escape') {
@@ -24,5 +24,14 @@ export default function Popup({ isOpen, onClose, children }) {
     }
   }, [isOpen]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <aside
+        className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}
+        id="popup-edit"
+      >
+        {children}
+      </aside>
+    </>
+  );
 }
